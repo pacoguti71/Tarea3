@@ -7,15 +7,18 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import gutierrezruiz.francisco.R;
+import gutierrezruiz.francisco.datos.Pokemon;
 
 public class PokedexAdapter extends RecyclerView.Adapter<PokedexAdapter.PokemonViewHolder> {
 
-    private List<String> pokemonList;
+    private ArrayList<Pokemon> pokemonList;
 
-    public PokedexAdapter(List<String> pokemonList) {
+    public PokedexAdapter(ArrayList<Pokemon> pokemonList) {
         this.pokemonList = pokemonList;
     }
 
@@ -29,18 +32,17 @@ public class PokedexAdapter extends RecyclerView.Adapter<PokedexAdapter.PokemonV
 
     @Override
     public void onBindViewHolder(@NonNull PokemonViewHolder holder, int position) {
-        String pokemonName = pokemonList.get(position);
-        holder.textViewPokemon.setText(pokemonName);
+        Pokemon pokemon = pokemonList.get(position);
+        holder.textViewPokemon.setText(pokemon.getNombre());
 
         holder.textViewPokemon.setOnClickListener(v -> {
-            // añadir pokemon a capturados
-            Toast.makeText(v.getContext(), "Clicked: ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(v.getContext(), "Clicked: " + pokemon.getNombre(), Toast.LENGTH_SHORT).show();
         });
     }
 
     @Override
     public int getItemCount() {
-        return pokemonList.size();
+        return (pokemonList != null) ? pokemonList.size() : 0;
     }
 
     static class PokemonViewHolder extends RecyclerView.ViewHolder {

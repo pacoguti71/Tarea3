@@ -1,12 +1,8 @@
 package gutierrezruiz.francisco;
 
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
-
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -15,19 +11,16 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.tabs.TabLayout;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.HashMap;
-import java.util.Map;
+import gutierrezruiz.francisco.datos.Pokemon;
 
 public class MainActivity extends AppCompatActivity {
 
     private TabLayout tabLayout;
     private NavController navController; // Declaración de la variable de NavController
+private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,30 +72,34 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Inicializa la base de datos Firebase
+         db = FirebaseFirestore.getInstance();
+        crearBD();
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        // Create a new user with a first and last name
-        Map<String, Object> user = new HashMap<>();
-        user.put("nombre", "Ada");
-        user.put("apellidos", "Lovelace");
-        user.put("anno_nacimiento", 1815);
+    }
 
-// Add a new document with a generated ID
-        db.collection("users")
-                .add(user)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
-                    }
-                });
+
+    private void crearBD(){
+
+        Pokemon miPokemon;
+/*
+        miPokemon = new Pokemon();
+        miPokemon.setNombre("Pikachu");
+        miPokemon.setIndice(25);
+        miPokemon.setFoto("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png");
+        miPokemon.setTipo("Electrico");
+        miPokemon.setPeso(6);
+        miPokemon.setAltura(4);
+        miPokemon.setCapturado(true);
+
+        db.collection("pokemon").add(miPokemon);
+*/
+
+
 
 
     }
-}
+
+
+
+} // Fin class

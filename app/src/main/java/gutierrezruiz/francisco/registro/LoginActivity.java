@@ -7,6 +7,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import gutierrezruiz.francisco.MainActivity;
 import gutierrezruiz.francisco.databinding.ActivityLoginBinding;
@@ -21,7 +22,7 @@ public class LoginActivity extends AppCompatActivity {
         // Llamada al método onCreate de la clase padre
         super.onCreate(savedInstanceState);
         // Infla la vista
-        binding = ActivityLoginBinding.inflate(getLayoutInflater()); // Inflate the layout
+        binding = ActivityLoginBinding.inflate(getLayoutInflater());
         // Establece el layout de la actividad
         setContentView(binding.getRoot());
 
@@ -43,12 +44,24 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        // Redirige al registro si pulsas el TextView
+        // Redirige al registro si pulsas el TextView de registro
         binding.TextViewRegistrar.setOnClickListener(view -> {
             Intent intent = new Intent(LoginActivity.this, RegistroActivity.class);
             startActivity(intent);
         });
     } // Fin onCreate
+
+    @Override
+    // Comprobamos si el usuario ya está autenticado
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
+        // Si el usuario ya está autenticado, redirige a la pantalla principal
+        if (usuario != null) {
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+        }
+    } // Fin onStart
 
     // Método para autenticar al usuario
     private void autenticarUsuario(String email, String password) {
