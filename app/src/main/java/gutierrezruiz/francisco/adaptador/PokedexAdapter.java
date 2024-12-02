@@ -36,7 +36,11 @@ public class PokedexAdapter extends RecyclerView.Adapter<PokedexAdapter.PokemonV
         holder.textViewPokemon.setText(pokemon.getNombre());
 
         holder.textViewPokemon.setOnClickListener(v -> {
-            Toast.makeText(v.getContext(), "Clicked: " + pokemon.getNombre(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(v.getContext(), "Has elegido a: " + pokemon.getNombre() +". Ha sido añadido a la lista de pokemons capturados", Toast.LENGTH_SHORT).show();
+            // Añadir el código para añadir el Pokémon a la lista de capturados
+
+
+
         });
     }
 
