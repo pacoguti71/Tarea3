@@ -7,4 +7,14 @@
     <string name="iniciar_sesi_n">Iniciar sesión</string>
     <string name="no_tienes_cuenta_reg_strate_aqu">¿No tienes cuenta? Regístrate aquí</string>
     <string name="registrarse">Registrarse</string>
+    <string name="autor">Francisco Gutiérrez Ruiz</string>
+    <string name="acerca_de">Acerca de...</string>
+    <string name="aceptar">Aceptar</string>
+    <string name="app_realizada_por">"App realizada por "</string>
+    <string name="versi_n">" versión "</string>
+    <string name="ajustes">Ajustes</string>
+    <string name="idioma">Idioma</string>
+    <string name="eliminar_pokemons">Eliminar Pokemons</string>
+    <string name="acerca_de2">Acerca de...</string>
+    <string name="cerrar_sesi_n">Cerrar sesión</string>
 </resources>
