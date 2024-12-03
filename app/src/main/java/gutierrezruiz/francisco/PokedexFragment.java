@@ -12,6 +12,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.ArrayList;
 
 import gutierrezruiz.francisco.adaptador.PokedexAdapter;
@@ -26,79 +28,94 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PokedexFragment extends Fragment {
 
-    private Retrofit retrofit; // Declaración de la variable Retrofit
-    private ArrayList<Pokemon> listaPokemon = new ArrayList<>(); // Declaración de la variable listaPokemon
-    private PokedexAdapter adapter; // Declaración de la variable adapter
+    private Retrofit retrofit;
+    private ArrayList<Pokemon> listaPokemon = new ArrayList<>();
+    private PokedexAdapter adapter;
 
     @Nullable
     @Override
-    // Infla el layout del fragmento
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_pokedex, container, false);
     }
 
     @Override
-    // Cuando se crea el fragmento
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Crea una instancia de Retrofit que se utilizará para hacer las llamadas a la API
         retrofit = new Retrofit.Builder()
                 .baseUrl("https://pokeapi.co/api/v2/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        // Configura el RecyclerView
         RecyclerView recyclerView = view.findViewById(R.id.recyclerViewPokedex);
-        // Configura el LayoutManager y el Adapter
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        // Crea un nuevo adapter con la lista de Pokémon
-        adapter = new PokedexAdapter(listaPokemon);
-        // Asigna el adapter al RecyclerView
+        adapter = new PokedexAdapter(listaPokemon, this::onPokemonClick);
         recyclerView.setAdapter(adapter);
-        // Llama al método para obtener los Pokémon de la API
+
         obtenerPokemons();
     }
 
-    // Método para obtener los Pokémon de la API
-    private void obtenerPokemons() {
-        // Crea una instancia del servicio de la API
+    private void onPokemonClick(Pokemon pokemon) {
+        Toast.makeText(getContext(), "Has elegido a: " + pokemon.getNombre(), Toast.LENGTH_SHORT).show();
+
         PokeapiService service = retrofit.create(PokeapiService.class);
-        // Realiza la llamada a la API para obtener los Pokémon
+        Call<Pokemon> pokemonCall = service.getPokemon(pokemon.getNombre().toLowerCase());
+
+        pokemonCall.enqueue(new Callback<Pokemon>() {
+            @Override
+            public void onResponse(@NonNull Call<Pokemon> call, @NonNull Response<Pokemon> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Pokemon pokemonCapturado = response.body();
+
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    db.collection("capturados")
+                            .document(pokemonCapturado.getNombre().toLowerCase())
+                            .set(pokemonCapturado)
+                            .addOnSuccessListener(aVoid -> {
+                                Toast.makeText(getContext(), "Capturaste a: " + pokemonCapturado.getNombre(), Toast.LENGTH_SHORT).show();
+                            })
+                            .addOnFailureListener(e -> {
+                                Toast.makeText(getContext(), "Error al guardar en Firestore: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            });
+
+                } else {
+                    Toast.makeText(getContext(), "Error al obtener datos del Pokémon", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Pokemon> call, @NonNull Throwable t) {
+                Toast.makeText(getContext(), "Error de red: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void obtenerPokemons() {
+        PokeapiService service = retrofit.create(PokeapiService.class);
         Call<PokemonRespuesta> pokemonRespuestaCall = service.obtenerPokemon();
-        // Realiza la llamada de manera asíncrona
+
         pokemonRespuestaCall.enqueue(new Callback<PokemonRespuesta>() {
             @Override
-            // Cuando se recibe la respuesta de la API
             public void onResponse(Call<PokemonRespuesta> call, Response<PokemonRespuesta> response) {
-                // Comprueba si la respuesta es exitosa
                 if (response.isSuccessful()) {
-                    // Obtiene el cuerpo de la respuesta
                     PokemonRespuesta pokemonRespuesta = response.body();
-                    // Comprueba si el cuerpo de la respuesta no es nulo y si contiene resultados
                     if (pokemonRespuesta != null && pokemonRespuesta.getResultados() != null) {
-                        // Limpia la lista de Pokémon y añade los nuevos resultados
                         listaPokemon.clear();
                         listaPokemon.addAll(pokemonRespuesta.getResultados());
-                        // Notifica al adapter que los datos han cambiado
                         adapter.notifyDataSetChanged();
                     } else {
-                        // Muestra un mensaje de error si no se encontraron resultados
                         Toast.makeText(getContext(), "No se encontraron resultados", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    // Muestra un mensaje de error si la respuesta no es exitosa
                     Toast.makeText(getContext(), "Error en la respuesta", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            // Cuando ocurre un error en la llamada
             public void onFailure(Call<PokemonRespuesta> call, Throwable t) {
-                // Muestra un mensaje de error con el detalle del error
                 Toast.makeText(getContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
+}
 
-} // Fin class

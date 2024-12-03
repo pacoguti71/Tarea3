@@ -2,14 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="horizontal"
+    android:padding="8dp">
 
-    <TextView
-        android:id="@+id/textViewPokemonCapturado"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#E0E0E0"
-        android:padding="8dp"
-        android:textSize="16sp" />
+        <ImageView
+            android:id="@+id/imageViewPokemonCapturado"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginEnd="8dp"
+            android:scaleType="centerCrop" />
 
+        <TextView
+            android:id="@+id/textViewPokemonCapturado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="#000"
+            android:layout_gravity="center_vertical" />
 </LinearLayout>

@@ -7,9 +7,6 @@ public class Pokemon {
     @SerializedName("name")
     private String nombre;
 
-    @SerializedName("url")
-    private String url;
-
     @SerializedName("id")
     private int indice;
 
@@ -32,14 +29,6 @@ public class Pokemon {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     public int getIndice() {
