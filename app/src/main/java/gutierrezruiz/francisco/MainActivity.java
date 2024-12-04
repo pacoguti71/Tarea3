@@ -74,31 +74,11 @@ private FirebaseFirestore db;
 
         // Inicializa la base de datos Firebase
          db = FirebaseFirestore.getInstance();
-        crearBD();
 
     }
 
 
-    private void crearBD(){
 
-        Pokemon miPokemon;
-/*
-        miPokemon = new Pokemon();
-        miPokemon.setNombre("Pikachu");
-        miPokemon.setIndice(25);
-        miPokemon.setFoto("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png");
-        miPokemon.setTipo("Electrico");
-        miPokemon.setPeso(6);
-        miPokemon.setAltura(4);
-        miPokemon.setCapturado(true);
-
-        db.collection("pokemon").add(miPokemon);
-*/
-
-
-
-
-    }
 
 
 

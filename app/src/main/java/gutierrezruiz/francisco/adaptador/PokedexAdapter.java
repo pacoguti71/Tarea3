@@ -3,28 +3,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
 import gutierrezruiz.francisco.R;
 import gutierrezruiz.francisco.datos.Pokemon;
-import gutierrezruiz.francisco.pokeapi.PokeapiService;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PokedexAdapter extends RecyclerView.Adapter<PokedexAdapter.PokemonViewHolder> {
 
-    private ArrayList<Pokemon> pokemonList;
-    private OnPokemonClickListener onPokemonClickListener;
+    private final ArrayList<Pokemon> pokemonList;
+    private final OnPokemonClickListener onPokemonClickListener;
 
     public interface OnPokemonClickListener {
         void onPokemonClick(Pokemon pokemon);

@@ -29,7 +29,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class PokedexFragment extends Fragment {
 
     private Retrofit retrofit;
-    private ArrayList<Pokemon> listaPokemon = new ArrayList<>();
+    private final ArrayList<Pokemon> listaPokemon = new ArrayList<>();
     private PokedexAdapter adapter;
 
     @Nullable

@@ -22,17 +22,17 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pokémon capturados" />
+            android:text="@string/pok_mon_capturados" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pokédex" />
+            android:text="@string/pok_dex" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ajustes" />
+            android:text="@string/ajustes" />
     </com.google.android.material.tabs.TabLayout>
 
     <androidx.fragment.app.FragmentContainerView

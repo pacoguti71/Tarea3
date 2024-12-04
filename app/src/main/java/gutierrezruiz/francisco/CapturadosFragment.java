@@ -16,7 +16,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import gutierrezruiz.francisco.adaptador.PokemonCapturadoAdapter;
@@ -26,7 +25,7 @@ public class CapturadosFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private PokemonCapturadoAdapter adapter;
-    private List<Pokemon> pokemonNames = new ArrayList<>();
+    private final List<Pokemon> pokemonNames = new ArrayList<>();
 
     @Nullable
     @Override

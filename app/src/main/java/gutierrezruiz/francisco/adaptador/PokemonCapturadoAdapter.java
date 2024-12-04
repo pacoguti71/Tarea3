@@ -18,7 +18,7 @@ import gutierrezruiz.francisco.datos.Pokemon;
 
 public class PokemonCapturadoAdapter extends RecyclerView.Adapter<PokemonCapturadoAdapter.PokemonViewHolder> {
 
-    private List<Pokemon> pokemonList; // Cambiar a List<Pokemon>
+    private final List<Pokemon> pokemonList; // Cambiar a List<Pokemon>
 
     public PokemonCapturadoAdapter(List<Pokemon> pokemonList) {
         this.pokemonList = pokemonList;

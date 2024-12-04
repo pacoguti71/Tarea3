@@ -17,4 +17,6 @@
     <string name="eliminar_pokemons">Eliminar Pokemons</string>
     <string name="acerca_de2">Acerca de...</string>
     <string name="cerrar_sesi_n">Cerrar sesión</string>
+    <string name="pok_mon_capturados">Pokémon capturados</string>
+    <string name="pok_dex">Pokédex</string>
 </resources>
